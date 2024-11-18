@@ -10,13 +10,16 @@ from PIL import Image
 import google.generativeai as genai
 
 # Ensure API key is set correctly
-api_key = os.getenv("GOOGLE_API_KEY", "AIzaSyAJJz4G1di0EE3C7blpDHnjyesxLOoTQkg")
-genai.configure(api_key=api_key)
+api_key = os.getenv("GOOGLE_API_KEY")
+if api_key is None:
+    st.error("GOOGLE_API_KEY environment variable not set.")
+else:
+    genai.configure(api_key=api_key)
 
 ## Function to load Google model and get responses
 def get_gemini_response(input, image):
     model = genai.GenerativeModel('gemini-1.5-flash')
-    if input != "":
+    if input:
         response = model.generate_content([input, image])
     else:
         response = model.generate_content(image)
