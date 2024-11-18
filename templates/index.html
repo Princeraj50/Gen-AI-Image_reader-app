@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazing Image Reader</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: black;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+        input, button {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+                border-radius: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Amazing Image Reader! 📸</h1>
+        <form method="post" enctype="multipart/form-data">
+            <label for="image">Upload an image (jpg, jpeg, png):</label>
+            <input type="file" name="image" id="image" accept="image/*">
+            <label for="input_text">Enter your text prompt here:</label>
+            <input type="text" name="input_text" id="input_text">
+            <button type="submit">Analyze Image</button>
+        </form>
+        {% if response %}
+            <div class="result">
+                <h2>Analysis Result:</h2>
+                <p>{{ response }}</p>
+                {% if image_path %}
+                    <img src="{{ image_path }}" alt="Uploaded Image">
+                {% endif %}
+            </div>
+        {% elif error %}
+            <div class="error" style="color: red;">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
